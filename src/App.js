@@ -1,25 +1,46 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+import { Container } from 'react-bootstrap'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Favourite from './Components/Favourite'
+import Header from './Components/Header'
+import Home from './Components/Home'
+import { withAuth0 } from '@auth0/auth0-react';
+import LoginButton from './Components/LoginButton';
+import Profile from './Components/Profile';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+export class App extends Component {
+  render() {
+    const { isAuthenticated  } = this.props.auth0;
+
+    return (
+      <>
+      <Router>
+        <Header/>
+        <Switch>
+
+
+          <Route exact path='/'>
+            {isAuthenticated ? <Container><Home/></Container> : <LoginButton/> }
+          </Route>
+          <Route exact path='/Favourite'>
+           {isAuthenticated ? <Container><Favourite/></Container> : <LoginButton/>  }
+          </Route>
+          <Route exact path='/Profile'>
+            {isAuthenticated ? <Container><Profile /></Container> : <LoginButton/> }
+          </Route>
+
+        </Switch>
+      </Router>
+        
+      </>
+    )
+  }
 }
 
-export default App;
+export default withAuth0(App)
