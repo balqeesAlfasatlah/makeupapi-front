@@ -17,7 +17,7 @@ export class Home extends Component {
     
 
     componentDidMount=()=>{
-        let url2='http://localhost:4005/getMakeup'
+        let url2=`${process.env.REACT_APP_SERVER}/getMakeup`
         axios.get(url2).then(item=>{
             this.setState({
                 makeupData : item.data,
@@ -34,7 +34,7 @@ export class Home extends Component {
             description : data.description,
             price : data.price,
         }
-        axios.post('http://localhost:4005/addMakeup',newData)
+        axios.post(`${process.env.REACT_APP_SERVER}/addMakeup`,newData)
     }
 
    

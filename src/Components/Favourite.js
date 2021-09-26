@@ -38,7 +38,7 @@ export class Favourite extends Component {
 
     delete =(index)=>{
        let id = this.state.favData[index]._id
-       axios.delete(`http://localhost:4005/deleteMakeup/${id}`).then(element=>{
+       axios.delete(`${process.env.REACT_APP_SERVER}/deleteMakeup/${id}`).then(element=>{
         this.setState({
             favData: element.data,
             show: true
@@ -75,7 +75,7 @@ export class Favourite extends Component {
             price : e.target.price.value,
 
         }
-        axios.put(`http://localhost:4005/updateMakeup/${id}`,data).then(item=>{
+        axios.put(`${process.env.REACT_APP_SERVER}/updateMakeup/${id}`,data).then(item=>{
             this.setState({
                 favData: item.data,
                 show: true
